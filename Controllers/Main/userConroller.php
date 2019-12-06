@@ -32,7 +32,6 @@ class userConroller extends \Controllers\Controller
                     'username' => $user['username'],
                     'level' => $user['lvl']
                 ];
-                $_SESSION['test'] = 'segev test';
                 
                 echo json_encode([
                     'act' => 'true',
@@ -59,7 +58,7 @@ class userConroller extends \Controllers\Controller
 
     public function CheckUser(){
     
-        var_dump($_COOKIE['testLogin'] , $_SESSION);
+        var_dump($_SESSION['login'] , $_SESSION['login']);
         die('s');
     
         if(isset($_SESSION['login']) && $_SESSION['login']['id']){
