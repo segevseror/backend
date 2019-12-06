@@ -10,6 +10,7 @@ class HomeController extends \Controllers\Controller
 
     public function Index()
     {
+        $_SESSION['test'] = 'segev';
         echo 'successfully completed';
         return true;
     }

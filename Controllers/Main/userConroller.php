@@ -6,9 +6,7 @@ class userConroller extends \Controllers\Controller
 {
     public function __construct($parma)
     { 
-
-        
-
+      
     }
 
     public function LogIn()
