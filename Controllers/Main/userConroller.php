@@ -125,6 +125,10 @@ class userConroller extends \Controllers\Controller
 
     public function addMovies(){
         global $conn;
+
+            var_dump([$idUser , $idMovies , $_SESSION['login']]);
+            die('die');
+
         if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
             return json_encode([
                 'act'=> 'false',
@@ -142,8 +146,7 @@ class userConroller extends \Controllers\Controller
                 return false;
             }
 
-            var_dump([$idUser , $idMovies]);
-            die();
+            
             $checkMoviesExi = pg_query_params($conn , 'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2 ' , [$idUser , $idMovies]);
 
         
