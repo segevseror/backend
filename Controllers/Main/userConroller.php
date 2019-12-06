@@ -58,10 +58,7 @@ class userConroller extends \Controllers\Controller
 
     public function CheckUser(){
     
-        var_dump($_SESSION['login'] , $_SESSION['login']);
-        die('s');
-    
-        if(isset($_SESSION['login']) && $_SESSION['login']['id']){
+        if($_SESSION['login'] && $_SESSION['login']['id']){
             echo json_encode([
                 'act' => 'true',
                 'username' => $_SESSION['login']['username']
@@ -70,7 +67,7 @@ class userConroller extends \Controllers\Controller
         }else{
             echo json_encode([
                 'act'=> 'fasle',
-                'message' => [$_COOKIE , $_SESSION]
+                'message' => 'user not connected'
             ]);
             return false;
         }
@@ -226,6 +223,19 @@ class userConroller extends \Controllers\Controller
         echo json_encode($userArr);
         return true;
     }
-    public function Index()
-    { }
+    public function GetMovies(){ 
+        global $conn;
+        $moviesArr = [];
+        $getMovies = pg_query($conn , 'SELECT * from movies');
+        while($movie = pg_fetch_assoc($getMovies)){
+            array_push($moviesArr , $movie['movies_id']);
+        }
+
+        echo json_encode([
+            'act'=>'true',
+            'allmovies' => $moviesArr
+        ]);
+        return true;
+
+    }
 }

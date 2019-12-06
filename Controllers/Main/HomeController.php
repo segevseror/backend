@@ -10,10 +10,6 @@ class HomeController extends \Controllers\Controller
 
     public function Index()
     {
-
-        $_SESSIO['login'] = '';
-        unset($_SESSIO['login']);
-        unset($_SESSIO);
         echo 'successfully completed';
         return true;
     }

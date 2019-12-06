@@ -13,8 +13,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
 
         $r->addRoute('GET', '/getuser', 'Main/userConroller@getUser');
         $r->addRoute('GET', '/getusers', 'Main/userConroller@getUsers');
+        $r->addRoute('GET', '/getmovies', 'Main/userConroller@GetMovies');
         $r->addRoute('GET', '/cheackuser', 'Main/userConroller@CheckUser');
         $r->addRoute('GET', '/logout', 'Main/userConroller@Logout');
+     
     });
 
  
@@ -41,6 +43,8 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
+        echo 'not found';
+        return false;
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
