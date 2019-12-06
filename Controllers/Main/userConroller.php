@@ -181,8 +181,6 @@ class userConroller extends \Controllers\Controller
             ]);
             return false;
         }else{
-
-          
             $userId = $_SESSION['login']['id'];
             $moviesForUser = pg_query_params($conn , 'SELECT * FROM movies WHERE user_id = $1 ' , [$userId]);
             if(pg_affected_rows($moviesForUser) > 0){
@@ -195,6 +193,12 @@ class userConroller extends \Controllers\Controller
                     'movies' => $moviesArr
                 ]);
                 return true;
+            }else{
+                echo json_encode([
+                    'act' => 'fasle',
+                    'message' => 'no movies for the user id '.$userId
+                ]);
+                return false;
             }
         }
     }
