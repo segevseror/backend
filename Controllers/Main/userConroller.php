@@ -125,7 +125,7 @@ class userConroller extends \Controllers\Controller
 
     public function addMovies(){
         global $conn;
-        if(! $_SESSION['login'] && ! $_SESSION['login']['id']){
+        if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
             return json_encode([
                 'act'=> 'false',
                 'message' => 'user not connected'
