@@ -61,22 +61,26 @@ class userConroller extends \Controllers\Controller
     }
 
     public function CheckUser(){
+    
+    
         if(isset($_SESSION['login']) && $_SESSION['login']['id']){
             echo json_encode([
                 'act' => 'true',
-                'username' => $_SESSION['login']['username'],
-                'level' => $_SESSION['login']['lvl']
+                'username' => $_SESSION['login']['username']
             ]);
             return true;
         }else{
             
-            $cook = getCookie('testLogin');
+            
             echo json_encode([
                 'act'=> 'fasle',
-                'message' => $cook
+                'message' => [$_COOKIE , $_SESSION]
             ]);
             return false;
         }
+
+        echo 'false';
+        return false;
     }
 
     public function RegisterUser()
