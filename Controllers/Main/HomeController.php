@@ -10,7 +10,8 @@ class HomeController extends \Controllers\Controller
 
     public function Index()
     {
-        $_SESSION['test'] = 'segev';
+
+        var_dump($_SESSION , $_COOKIE);
         echo 'successfully completed';
         return true;
     }

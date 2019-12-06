@@ -27,14 +27,13 @@ class userConroller extends \Controllers\Controller
             $login = pg_query_params($conn , "SELECT * FROM users WHERE username = $1 AND pass = $2" , [$userName , $pass]);
             $user = pg_fetch_assoc($login);
             if ($user && $user['id']) {
-                unset($_SESSION['login']);
-                unset($_SESSION);
                 $_SESSION['login'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'level' => $user['lvl']
                 ];
-                setcookie("testLogin", 'test' , time()+3600);
+                $_SESSION['test'] = 'segev test';
+                
                 echo json_encode([
                     'act' => 'true',
                     'id' => $user['id'],
