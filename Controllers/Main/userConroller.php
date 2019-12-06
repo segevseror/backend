@@ -70,8 +70,6 @@ class userConroller extends \Controllers\Controller
             ]);
             return true;
         }else{
-            
-            
             echo json_encode([
                 'act'=> 'fasle',
                 'message' => [$_COOKIE , $_SESSION]
