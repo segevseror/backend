@@ -29,6 +29,8 @@ class userConroller extends \Controllers\Controller
             $login = pg_query_params($conn , "SELECT * FROM users WHERE username = $1 AND pass = $2" , [$userName , $pass]);
             $user = pg_fetch_assoc($login);
             if ($user && $user['id']) {
+                unset($_SESSION['login']);
+                unset($_SESSION);
                 $_SESSION['login'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
@@ -67,7 +69,12 @@ class userConroller extends \Controllers\Controller
             ]);
             return true;
         }else{
-            echo 'false';
+            
+            $cook = getCookie('testLogin');
+            echo json_encode([
+                'act'=> 'fasle',
+                'message' => $cook
+            ]);
             return false;
         }
     }
