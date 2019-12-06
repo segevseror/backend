@@ -62,6 +62,8 @@ class userConroller extends \Controllers\Controller
 
     public function CheckUser(){
     
+        var_dump($_COOKIE['testlogin'] , $_SESSION);
+        die('s');
     
         if(isset($_SESSION['login']) && $_SESSION['login']['id']){
             echo json_encode([
