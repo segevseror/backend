@@ -17,7 +17,8 @@
    $dbname      = "dbname = dav5nd421ipu74";
    $credentials = "user = lfpegwcrzqkfgp password=52bc85c5bec01bb9563d98e20dcad713319986829d6321939892fe4f3787227c";
 
-   $db = pg_connect( "$host $port $dbname $credentials"  );
+   $conn = pg_connect( "$host $port $dbname $credentials"  );
+   $db = false;
    if(!$db) {
       echo "Error : Unable to open database\n";
    } else {

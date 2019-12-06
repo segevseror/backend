@@ -25,16 +25,16 @@ class userConroller extends \Controllers\Controller
         }
 
         if (!$_SESSION['login']) {
-            $login = $conn->prepare("SELECT * FROM users WHERE username = :username AND pass = :pass");
-            $login->execute([':username' => $userName, ':pass' => $pass]);
-            $user = $login->fetch();
-            if ($user) {
+            $login = pg_query($conn , "SELECT * FROM users WHERE username = '$userName' AND pass = '$pass'");
+            $user = pg_fetch_assoc($login);
+            if ($user && $user['id']) {
                 $_SESSION['login'] = [
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'level' => $user['lvl']
                 ];
                 echo json_encode([
+                    'act' => 'true',
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'level' => $user['lvl']
@@ -42,7 +42,10 @@ class userConroller extends \Controllers\Controller
                 return true;
             }
         }else{
-            echo 'This user is connected you can Logout from /logout';
+            echo json_encode([
+                'act' => 'fasle',
+                'message'=>'This user is connected you can Logout from /logout'
+            ]);
             return false;
         }
     }
