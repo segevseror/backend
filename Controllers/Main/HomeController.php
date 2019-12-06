@@ -10,7 +10,7 @@ class HomeController extends \Controllers\Controller
 
     public function Index()
     {
-        echo 'successfully completed';
+        echo 'successfully completedd';
         return true;
     }
 }
