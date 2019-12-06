@@ -8,5 +8,3 @@ if (Controllers\Controller::RunRouter($routeInfo) === true) {
    exit;
 } 
 
-echo 'segev';
-die('s');
