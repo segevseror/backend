@@ -9,7 +9,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addGroup('/user', function (FastRoute\RouteCollector $r) {
         $r->addRoute('POST', '/adduser', 'Main/userConroller@RegisterUser');
         $r->addRoute('POST', '/login', 'Main/userConroller@LogIn');
+        $r->addRoute('POST', '/addmovies', 'Main/userConroller@addMovies');
 
+        $r->addRoute('GET', '/getuser', 'Main/userConroller@getUser');
         $r->addRoute('GET', '/getusers', 'Main/userConroller@getUsers');
         $r->addRoute('GET', '/cheackuser', 'Main/userConroller@CheckUser');
         $r->addRoute('GET', '/logout', 'Main/userConroller@Logout');

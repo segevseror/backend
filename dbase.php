@@ -12,15 +12,16 @@
 //     print "Error!: " . $e->getMessage() . "<br/>";
 //     die();
 // }
-   $host        = "host = ec2-54-217-234-157.eu-west-1.compute.amazonaws.com";
+   $host        = "host = ec2-174-129-43-40.compute-1.amazonaws.com";
    $port        = "port = 5432";
-   $dbname      = "dbname = dav5nd421ipu74";
-   $credentials = "user = lfpegwcrzqkfgp password=52bc85c5bec01bb9563d98e20dcad713319986829d6321939892fe4f3787227c";
+   $dbname      = "dbname = d401qebkdh7ra";
+   $credentials = "user = iuqodffpzenrye password=7c50613b97c4cf89e3ae97c49cb6b52db20379b7239705ad78ec98ee02210152";
 
    $conn = pg_connect( "$host $port $dbname $credentials"  );
    $db = false;
-   if(!$db) {
+   if(!$conn) {
       echo "Error : Unable to open database\n";
+      return false;
    } else {
     global $db;
   
