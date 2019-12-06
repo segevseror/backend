@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: chrome-extension://jkigokhdddmikaghkoeledahofdmndkb');
 session_start ();
 require 'dbase.php';
 require 'route.php';
