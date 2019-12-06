@@ -34,11 +34,11 @@ class userConroller extends \Controllers\Controller
                     'username' => $user['username'],
                     'level' => $user['lvl']
                 ];
+                setcookie("testLogin", 'test' , time()+3600);
                 echo json_encode([
                     'act' => 'true',
                     'id' => $user['id'],
-                    'username' => $user['username'],
-                    'level' => $user['lvl']
+                    'username' => $user['username']
                 ]);
                 return true;
             }
