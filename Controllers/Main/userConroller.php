@@ -138,6 +138,9 @@ class userConroller extends \Controllers\Controller
         }else{
             $idUser = $_SESSION['login']['id'];
             $idMovies = $_POST['moviesId'];
+            $img = $_POST['img'];
+            $title = $_POST['title'];
+            $act = $_POST['act'];
             if(!$idUser && !$idMovies){
                 echo json_encode([
                     'act'=> 'false',
@@ -145,31 +148,50 @@ class userConroller extends \Controllers\Controller
                 ]);
                 return false;
             }
+            if($act == 'add'){
+                $checkMoviesExi = pg_query_params($conn , 'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2 AND img = $3 AND title = $4 ' , [$idUser , $idMovies , $img , $title]);
+                if(pg_affected_rows($checkMoviesExi) > 0 || !$checkMoviesExi){
+                    echo json_encode([
+                        'act'=> 'fasle',
+                        'message'=> 'movies is Exists'
+                    ]);
+                    return false;
+                }else{
+                    $addMovies = pg_query_params($conn , "INSERT INTO movies( user_id , movies_id ) VALUES ( $1 , $2 )" , [intval($idUser) , $idMovies]);
+                        if(pg_affected_rows($addMovies)){
+                            echo json_encode([
+                                'act'=> 'true',
+                                'message' => 'movies is add'
+                            ]);
+                            return true;
+                        }else{
+                            echo json_encode([
+                                'act'=> 'false',
+                                'message' => 'movies not add'
+                            ]);
+                            return false;
+                        }
+                }
 
-            
-            $checkMoviesExi = pg_query_params($conn , 'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2 ' , [$idUser , $idMovies]);
-            if(pg_affected_rows($checkMoviesExi) > 0 || !$checkMoviesExi){
-                echo json_encode([
-                    'act'=> 'fasle',
-                    'message'=> 'movies is Exists'
-                ]);
-                return false;
-            }else{
-                $addMovies = pg_query_params($conn , "INSERT INTO movies( user_id , movies_id ) VALUES ( $1 , $2 )" , [intval($idUser) , $idMovies]);
-                    if(pg_affected_rows($addMovies)){
-                        echo json_encode([
-                            'act'=> 'true',
-                            'message' => 'movies is add'
-                        ]);
-                        return true;
-                    }else{
-                        echo json_encode([
-                            'act'=> 'false',
-                            'message' => 'movies not add'
-                        ]);
-                        return false;
-                    }
+            }elseif($act == 'remove'){
+                $removeMovie = pg_query_params($conn , "DELETE FROM movies WHERE user_id = $1 AND movies_id = $2 " , [$idUser , $idMovies]);
+                if(pg_affected_rows($removeMovie) > 0){
+                    echo json_encode([
+                        'act'=>'true',
+                        'message'=> 'movies is removied'
+                    ]);
+                    return true;
+                }else{
+                    echo json_encode([
+                        'act'=>'false',
+                        'message'=> 'movies not found'
+                    ]);
+                    return false;
+                }
+
             }
+          
+      
 
         }
     }
