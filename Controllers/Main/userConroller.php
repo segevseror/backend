@@ -149,7 +149,7 @@ class userConroller extends \Controllers\Controller
                 return false;
             }
             if($act == 'add'){
-                $checkMoviesExi = pg_query_params($conn , 'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2 AND img = $3 AND title = $4 ' , [$idUser , $idMovies , $img , $title]);
+                $checkMoviesExi = pg_query_params($conn , 'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2  ' , [$idUser , $idMovies ]);
                 if(pg_affected_rows($checkMoviesExi) > 0 || !$checkMoviesExi){
                     echo json_encode([
                         'act'=> 'fasle',
@@ -157,7 +157,7 @@ class userConroller extends \Controllers\Controller
                     ]);
                     return false;
                 }else{
-                    $addMovies = pg_query_params($conn , "INSERT INTO movies( user_id , movies_id ) VALUES ( $1 , $2 )" , [intval($idUser) , $idMovies]);
+                    $addMovies = pg_query_params($conn , "INSERT INTO movies( user_id , movies_id , img , title ) VALUES ( $1 , $2 , $3 , $4 )" , [intval($idUser) , $idMovies , $img , $title]);
                         if(pg_affected_rows($addMovies)){
                             echo json_encode([
                                 'act'=> 'true',
