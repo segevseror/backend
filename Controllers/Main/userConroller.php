@@ -39,6 +39,12 @@ class userConroller extends \Controllers\Controller
                     'username' => $user['username']
                 ]);
                 return true;
+            }else{
+                echo json_encode([
+                    'act' => 'false',
+                    'message' => 'details error'
+                ]);
+                return false;
             }
         }else{
             echo json_encode([
