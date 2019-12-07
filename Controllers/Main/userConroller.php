@@ -219,7 +219,8 @@ class userConroller extends \Controllers\Controller
                 return true;
             }else{
                 echo json_encode([
-                    'act' => 'fasle',
+                    'act' => 'true',
+                    'movies' => null,
                     'message' => 'no movies for the user id '.$userId
                 ]);
                 return false;
