@@ -248,6 +248,13 @@ class userConroller extends \Controllers\Controller
     }
     public function GetMovies(){ 
         global $conn;
+        if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
+            echo json_encode([
+                'act'=>'false',
+                'message' => 'user not conneced'
+            ]);
+            return false;
+        }
         $moviesArr = [];
         $getMovies = pg_query($conn , 'SELECT * from movies');
         while($movie = pg_fetch_assoc($getMovies)){
