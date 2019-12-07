@@ -207,7 +207,7 @@ class userConroller extends \Controllers\Controller
         }else{
             $userId = $_SESSION['login']['id'];
             $moviesForUser = pg_query_params($conn , 'SELECT * FROM movies WHERE user_id = $1 ' , [$userId]);
-            if(pg_affected_rows($moviesForUser) > 0){
+            if( $moviesForUser){
                 $moviesArr = [];
                 while($movies = pg_fetch_assoc($moviesForUser)){
                     array_push($moviesArr , $movies['movies_id']);
@@ -219,9 +219,9 @@ class userConroller extends \Controllers\Controller
                 return true;
             }else{
                 echo json_encode([
-                    'act' => 'true',
+                    'act' => 'false',
                     'movies' => null,
-                    'message' => 'no movies for the user id '.$userId
+                    'message' => 'disconnect'
                 ]);
                 return false;
             }
@@ -251,7 +251,7 @@ class userConroller extends \Controllers\Controller
         $moviesArr = [];
         $getMovies = pg_query($conn , 'SELECT * from movies');
         while($movie = pg_fetch_assoc($getMovies)){
-            array_push($moviesArr , $movie['movies_id']);
+            array_push($moviesArr , $movie);
         }
 
         echo json_encode([
