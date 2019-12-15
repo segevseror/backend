@@ -133,7 +133,7 @@ class userConroller extends \Controllers\Controller
         }
     }
 
-    public function addMovies(){
+    public function AddMovies(){
         global $conn;
         if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
             echo json_encode([
@@ -202,10 +202,10 @@ class userConroller extends \Controllers\Controller
         }
     }
 
-    public function getUser(){
+    public function GetUser(){
         global $conn;
 
-        if(!$_SESSION['login'] && !$_SESSION['login']['id']){
+        if(!$_SESSION['login'] || !$_SESSION['login']['id']){
             echo json_encode([
                 'act'=>'false',
                 'message' => 'not connected'
@@ -235,7 +235,7 @@ class userConroller extends \Controllers\Controller
         }
     }
 
-    public function getUsers()
+    public function GetUsers()
     {
         global $conn;
 
