@@ -204,10 +204,6 @@ class userConroller extends \Controllers\Controller
 
     public function getUser(){
         global $conn;
-        echo json_encode([
-            'act' => 'true'
-        ]);
-        return true;
 
         if(!$_SESSION['login'] && !$_SESSION['login']['id']){
             echo json_encode([
