@@ -244,6 +244,8 @@ class userConroller extends \Controllers\Controller
             return false;
         }
 
+        
+
         $users = $conn->prepare('SELECT id,username,lvl FROM users');
         $users->execute();
         $userArr = array();
@@ -253,6 +255,7 @@ class userConroller extends \Controllers\Controller
         echo json_encode($userArr);
         return true;
     }
+
     public function GetMovies(){ 
         global $conn;
         if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
@@ -263,11 +266,22 @@ class userConroller extends \Controllers\Controller
             return false;
         }
         $moviesArr = [];
-        $getMovies = pg_query($conn , 'SELECT * from movies');
-        while($movie = pg_fetch_assoc($getMovies)){
-            array_push($moviesArr , $movie);
-        }
+        $getMovies = pg_query($conn , 'SELECT users.username , movies.movies_id , movies.img ,movies.title
+        FROM public.users
+        INNER JOIN movies ON users.id = movies.user_id
+        group by users.id , movies.id');      
 
+        while($movies = pg_fetch_assoc($getMovies)){
+            $moviesArr[$movies['username']][] = $movies;
+        };
+      
+        // foreach($moviesArr as $user){
+        //     if(in_array($userArr , $user['username'])){
+        //         a
+        //     }
+        // }
+       
+     
         echo json_encode([
             'act'=>'true',
             'allmovies' => $moviesArr
