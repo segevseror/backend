@@ -10,7 +10,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('POST', '/adduser', 'Main/userConroller@RegisterUser');
         $r->addRoute('POST', '/login', 'Main/userConroller@LogIn');
         $r->addRoute('POST', '/addmovies', 'Main/userConroller@AddMovies');
-
+        $r->addRoute('POST', '/removemovies', 'Main/userConroller@AddMovies');
+      
         $r->addRoute('GET', '/getuser', 'Main/userConroller@GetUser');
         $r->addRoute('GET', '/getusers', 'Main/userConroller@GetUsers');
         $r->addRoute('GET', '/getmovies', 'Main/userConroller@GetMovies');

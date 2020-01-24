@@ -88,6 +88,10 @@ class userConroller extends \Controllers\Controller
         $userName = $_POST['username'];
         $pass = $_POST['password'];
         $errors = [];
+        if(!$_SESSION['login'] || $_SESSION['login']['id'] != '25'){
+            echo json_encode(['act' => false, 'message' => 'this request not have permission']);
+            return false;
+        }
         if (!$userName) {
             $errors['usename'] = 'you most give the username';
         }
@@ -100,7 +104,6 @@ class userConroller extends \Controllers\Controller
         } else {
             //check if username is exists;
             $checkUserName = pg_query_params($conn , 'SELECT id FROM users WHERE username = $1 ' , [$userName]);
-        
             $checkUserName = pg_fetch_assoc($checkUserName);
          
             if ($checkUserName > 0) {
@@ -132,6 +135,37 @@ class userConroller extends \Controllers\Controller
             return false;
         }
     }
+
+    
+    // public function RemoveMovies(){
+    //     global $conn;
+    //     if(! $_SESSION['login'] || ! $_SESSION['login']['id']){
+    //         echo json_encode([
+    //             'act'=> 'false',
+    //             'err' => '1561',
+    //             'message' => 'user not connected'
+    //         ]);
+    //         die('fasslse');
+    //         return false;
+    //     }else{
+    //         $idMovies = $_GET['id'];
+    //         $userId = $_SESSION['login']['id'];
+    //         if(!is_numeric($idMovies)){
+    //             echo 'false';
+    //             return false;
+    //         }
+           
+    //         //'SELECT id FROM movies WHERE user_id = $1 AND movies_id = $2  '
+    //         $removeMovies = pg_query_params($conn , 'DELETE FROM movies WHERE user_id = $1 AND movies_id = $2 '  , [$userId , $idMovies ]);
+
+    //         var_dump(pg_affected_rows($removeMovies));
+    //         die('s');
+    //         if(pg_affected_rows($removeMovies)>0){
+    //             die('true');
+    //         }
+    //         die('false');
+    //     }
+    // }
 
     public function AddMovies(){
         global $conn;
@@ -238,21 +272,21 @@ class userConroller extends \Controllers\Controller
     public function GetUsers()
     {
         global $conn;
-
-        if (!$_SESSION['login']) {
-            echo 'false';
+        if (!$_SESSION['login'] || $_SESSION['login']['id'] != '25') {
+            echo json_encode([
+                'act'=>'false',
+                'message' => ( $_SESSION['login']['id'] != '25' ? 'this user no have permission' : 'user not conneced')
+            ]);
             return false;
         }
+   
 
-        
-
-        $users = $conn->prepare('SELECT id,username,lvl FROM users');
-        $users->execute();
-        $userArr = array();
-        while ($user = $users->fetchAll()) {
-            $userArr += $user;
-        };
-        echo json_encode($userArr);
+        $users = pg_query( $conn , 'SELECT * FROM users');
+        $usersArr = array();
+        while($user =  pg_fetch_assoc($users)){
+            array_push($usersArr , $user);
+        }
+        echo json_encode($usersArr);
         return true;
     }
 
@@ -275,12 +309,6 @@ class userConroller extends \Controllers\Controller
             $moviesArr[$movies['username']][] = $movies;
         };
       
-        // foreach($moviesArr as $user){
-        //     if(in_array($userArr , $user['username'])){
-        //         a
-        //     }
-        // }
-       
      
         echo json_encode([
             'act'=>'true',
