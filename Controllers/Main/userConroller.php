@@ -300,10 +300,14 @@ class userConroller extends \Controllers\Controller
             return false;
         }
         $moviesArr = [];
-        $getMovies = pg_query($conn , 'SELECT users.username , movies.movies_id , movies.img ,movies.title
+        $getMovies = pg_query_params($conn , 'SELECT users.username , movies.movies_id , movies.img ,movies.title , CASE
+        WHEN users.id = $1 THEN 1
+            ELSE 0
+        END 
+        AS thisUser
         FROM public.users
         INNER JOIN movies ON users.id = movies.user_id
-        group by users.id , movies.id');      
+        group by users.id , movies.id' , [$_SESSION['login']['id']] );      
 
         while($movies = pg_fetch_assoc($getMovies)){
             $moviesArr[$movies['username']][] = $movies;
