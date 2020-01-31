@@ -1,11 +1,11 @@
 <?php
 
 require 'vendor/autoload.php';
-
 require_once 'Controllers/Controller.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/', 'Main/HomeController@Index');
+    $r->addRoute('GET', '/register', 'Main/HomeController@Register');
     $r->addGroup('/user', function (FastRoute\RouteCollector $r) {
         $r->addRoute('POST', '/adduser', 'Main/userConroller@RegisterUser');
         $r->addRoute('POST', '/login', 'Main/userConroller@LogIn');
@@ -17,7 +17,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '/getmovies', 'Main/userConroller@GetMovies');
         $r->addRoute('GET', '/cheackuser', 'Main/userConroller@CheckUser');
         $r->addRoute('GET', '/logout', 'Main/userConroller@Logout');
-     
     });
 
  

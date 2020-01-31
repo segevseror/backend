@@ -87,8 +87,9 @@ class userConroller extends \Controllers\Controller
         global $conn;
         $userName = $_POST['username'];
         $pass = $_POST['password'];
+        $passAdmin = $_POST['passAdmin'];
         $errors = [];
-        if(!$_SESSION['login'] || $_SESSION['login']['id'] != '25'){
+        if($passAdmin != '8889'){
             echo json_encode(['act' => false, 'message' => 'this request not have permission']);
             return false;
         }
