@@ -17,6 +17,8 @@
    $dbname      = "dbname = d401qebkdh7ra";
    $credentials = "user = iuqodffpzenrye password=7c50613b97c4cf89e3ae97c49cb6b52db20379b7239705ad78ec98ee02210152";
 
+
+
    $conn = pg_connect( "$host $port $dbname $credentials"  );
    $db = false;
    if(!$conn) {

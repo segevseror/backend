@@ -5,7 +5,6 @@ namespace Controllers;
 abstract class Controller {
     protected $set;
     protected function __construct($params = []){
-       
     }
 
 
