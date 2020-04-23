@@ -48,7 +48,7 @@ class userConroller extends \Controllers\Controller
             }
         }else{
             echo json_encode([
-                'act' => 'fasle',
+                'act' => 'false',
                 'message'=>'This user is connected you can Logout from /logout'
             ]);
             return false;
