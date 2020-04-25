@@ -305,7 +305,7 @@ class userConroller extends \Controllers\Controller
         refer AS r ON m.movies_id = r.movies_id
         left JOIN 
         users AS u ON CAST(r.user_id AS INT) = u.id
-        ORDER BY m.movies_id" , [] );      
+        ORDER BY m.cdate" , [] );      
 
         while($movies = pg_fetch_assoc($getMovies)){
             if(!array_key_exists($movies['movies_id'] , $moviesArr)){
