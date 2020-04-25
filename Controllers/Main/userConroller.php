@@ -225,34 +225,44 @@ class userConroller extends \Controllers\Controller
 
     public function GetUser(){
         global $conn;
-        // if(!$_SESSION['login'] || !$_SESSION['login']['id']){
-        //     echo json_encode([
-        //         'act'=>'false',
-        //         'message' => 'not connected'
-        //     ]);
-        //     return false;
-        // }else{
-        //     $userId = $_SESSION['login']['id'];
-        //     $moviesForUser = pg_query_params($conn , 'SELECT * FROM movies WHERE user_id = $1 ' , [$userId]);
-        //     if( $moviesForUser){
-        //         $moviesArr = [];
-        //         while($movies = pg_fetch_assoc($moviesForUser)){
-        //             array_push($moviesArr , $movies['movies_id']);
-        //         }
-        //         echo json_encode([
-        //             'act' => 'true',
-        //             'movies' => $moviesArr
-        //         ]);
-        //         return true;
-        //     }else{
-        //         echo json_encode([
-        //             'act' => 'false',
-        //             'movies' => null,
-        //             'message' => 'disconnect'
-        //         ]);
-        //         return false;
-        //     }
-        // }
+        if(!$_SESSION['login'] || !$_SESSION['login']['id']){
+            echo json_encode([
+                'act'=>'false',
+                'message' => 'not connected'
+            ]);
+            return false;
+        }else{
+            $userId = $_SESSION['login']['id'];
+            $moviesForUser = pg_query_params($conn , 'SELECT m.img , m.title , m.cdate , u.username  from movies AS M
+            INNER JOIN refer AS r
+            ON r.movies_id = m.movies_id
+            INNER JOIN users AS u
+            ON CAST( u.id AS varchar(25)) =  r.user_id
+            WHERE u.id = $1' , [$userId]);
+            $movies = [];
+            while($m = pg_fetch_assoc($moviesForUser)){
+                $movies[] = $m;
+                $username = $m['username'];
+            }
+            $user = [
+                'username'=> $username,
+                'movies' => $movies
+            ];
+            if( $moviesForUser){
+                echo json_encode([
+                    'act' => 'true',
+                    'user' =>  $user
+                ]);
+                return true;
+            }else{
+                echo json_encode([
+                    'act' => 'false',
+                    'movies' => null,
+                    'message' => 'disconnect'
+                ]);
+                return false;
+            }
+        }
     }
 
     public function GetUsers()
