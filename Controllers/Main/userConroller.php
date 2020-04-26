@@ -305,21 +305,25 @@ class userConroller extends \Controllers\Controller
         refer AS r ON m.movies_id = r.movies_id
         left JOIN 
         users AS u ON CAST(r.user_id AS INT) = u.id
-        ORDER BY m.cdate" , [] );      
+        ORDER BY m.id DESC" , [] );      
 
+        $key = 0;
         while($movies = pg_fetch_assoc($getMovies)){
             if(!array_key_exists($movies['movies_id'] , $moviesArr)){
-                $moviesArr[$movies['movies_id']] = [
+                $moviesArr[$key] = [
+                    'id_movies' => $movies['movies_id'],
                     'img' => $movies['img'],
                     'title' => $movies['title'],
                     'cdate' => $movies['cdate'],
                     'sharing' => [$movies['username']],
                     'origin_date' => $movies['origin_date']
                 ];
+                $key++;
             }else{
                 array_push($moviesArr[$movies['movies_id']]['sharing'] , $movies['username']); 
             }
         };
+
         echo json_encode([
             'act'=>'true',
             'allmovies' => $moviesArr

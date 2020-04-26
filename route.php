@@ -32,7 +32,7 @@ if (false !== $pos = strpos($uri, '?')) {
 }
 
 $uri = rawurldecode($uri);
-//$uri = str_replace('/backend/' ,'/' , $uri);
+$uri = str_replace('/backend/' ,'/' , $uri);
 // if($_SERVER['HTTP_HOST'] != "ball-app.x"){
 //     $uri = '/ben-api/api-golball/';
 // }
