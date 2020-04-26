@@ -316,7 +316,8 @@ class userConroller extends \Controllers\Controller
                     'title' => $movies['title'],
                     'cdate' => $movies['cdate'],
                     'sharing' => [$movies['username']],
-                    'origin_date' => $movies['origin_date']
+                    'origin_date' => $movies['origin_date'],
+                    'fevore' => false
                 ];
                 $key++;
             }else{
